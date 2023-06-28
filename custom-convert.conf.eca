@@ -1,0 +1,13 @@
+#
+# wavin 
+#
+wavin wav * * 
+	# R
+	[ecasound] -q -z:db -b:4096 -f:16,2,44100 -i:alsa,$FILE$ -o stdout  
+wavin mp3 * *
+	# RB:{BITRATE=-B %B}
+	[ecasound] -q -z:db -b:4096 -f:16,2,44100 -i:alsa,$FILE$ -o stdout  | [lame] --silent -r -x -q $QUALITY$ -b $BITRATE$ - -
+wavin flc * *
+	# R 
+	[ecasound] -q -z:db -b:4096 -f:16,2,44100 -i:alsa,$FILE$ -o stdout  | [flac] -cs --totally-silent --endian=little --channels=2 --sign=signed --bps=16 --sample-rate=44100 --compression-level-0 -
+
