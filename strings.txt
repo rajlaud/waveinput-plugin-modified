@@ -14,3 +14,9 @@ PLUGIN_WAVEINPUT_PAUSESTOP
 	
 PLUGIN_WAVEINPUT_PAUSESTOP_DESC
 	EN	If Enabled - Pause will stop playing of PC audio. On some systems if the PC audio stream is only paused - buffer fill up and error messages mnay be generated from application such as arecord or ecasound..
+
+PLUGIN_WAVEINPUT_METADATA_FILE
+	EN	Optional file from which to load metadata.
+
+PLUGIN_WAVEINPUT_METADATA_FILE_DESC
+	EN	If specified, this file will be read for metadata. Must be in JSON format.

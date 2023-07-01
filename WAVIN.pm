@@ -5,6 +5,7 @@ package Plugins::WaveInput::WAVIN;
 
 use strict;
 use base qw(Slim::Player::Pipeline);
+use JSON::XS::VersionOneAndTwo;
 use Slim::Utils::Strings qw(string);
 use Slim::Utils::Misc;
 use Slim::Utils::Log;
@@ -99,18 +100,39 @@ sub getMetadataFor {
 
 	$log->debug("Begin Function for $url $icon");
 
-	
-#	Slim::Music::Info::setCurrentTitle( $url, 'PC WaveInput'  );
-	return {
-#		title    =>  'WaveInput', 
-		bitrate  =>  "CD ",
-		icon   => $icon,
-		cover  => $icon,
-		type   => 'PC Sound WaveInput',
+	my %metadata_hash = {
+		bitrate =>  "CD ",
+		icon => $icon,
+		cover => $icon,
+		type => 'PC Sound WaveInput',
 	};
 
+	my $metadata_file = $prefs->get('metadata_file');
+	if(length $metadata_file) {
+		my $metadata = _readMetadataJSON($metadata_file);
+		foreach my $key (keys %$metadata) {
+			$metadata_hash{lc($key)} = $metadata->{$key};
+		}
+	} else {
+		$log->debug("No metadata_file set");
+	}
+
+	return \%metadata_hash;
 }
 
+
+sub _readMetadataJSON {
+	my $metadata_file = shift;
+
+	if (open( my $fh, "<", $metadata_file) ) {
+		my $json_text = <$fh>;
+		my $metadata = from_json($json_text);
+		return $metadata;
+	}
+	else {
+		$log->debug("Couldn't open metadata_file $metadata_file");
+	}
+}
 
 1;
 

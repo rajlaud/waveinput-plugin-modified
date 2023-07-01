@@ -24,6 +24,7 @@ my $osdetected = Slim::Utils::OSDetect::OS();
 
 my %defaults = (
 	pausestop  => 1,
+	metadata_file => "",
 );
 
 $log->debug("Settings called");
@@ -66,7 +67,7 @@ sub page {
 
 sub prefs {
 	$log->debug("Prefs called");
-	return ($prefs, qw( pausestop ));
+	return ($prefs, qw( pausestop, metadata_file ));
 }
 
 sub handler {
@@ -75,6 +76,7 @@ sub handler {
 
 	if ($params->{'saveSettings'}) {
 		$prefs->set('pausestop', $params->{'pausestop'});
+		$prefs->set('metadata_file', $params->{'metadata_file'});
 	}
 	return $class->SUPER::handler( $client, $params );
 }

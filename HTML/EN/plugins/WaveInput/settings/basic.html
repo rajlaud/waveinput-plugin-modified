@@ -5,6 +5,9 @@
 		[% IF prefs.pausestop == 1%] checked="checked" [% END %] value="1"
 	    />
 	[% END %]
+	[% WRAPPER setting title="PLUGIN_WAVEINPUT_METADATA_FILE" desc="PLUGIN_WAVEINPUT_METADATA_FILE_DESC" %]
+		<input type="text" name="metadata_file" id="metadata_file" value="[% prefs.metadata_file %]">
+	[% END %]
   [% END %]
 [% PROCESS settings/footer.html %]
 
