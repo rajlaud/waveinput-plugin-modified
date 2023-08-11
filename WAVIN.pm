@@ -110,8 +110,10 @@ sub getMetadataFor {
 	my $metadata_file = $prefs->get('metadata_file');
 	if(length $metadata_file) {
 		my $metadata = _readMetadataJSON($metadata_file);
-		foreach my $key (keys %$metadata) {
-			$metadata_hash{lc($key)} = $metadata->{$key};
+		if($metadata) {
+			foreach my $key (keys %$metadata) {
+				$metadata_hash{lc($key)} = $metadata->{$key};
+			}
 		}
 	} else {
 		$log->debug("No metadata_file set");
@@ -131,6 +133,7 @@ sub _readMetadataJSON {
 	}
 	else {
 		$log->debug("Couldn't open metadata_file $metadata_file");
+		return 0;
 	}
 }
 
